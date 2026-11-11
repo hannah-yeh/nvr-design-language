@@ -1,26 +1,102 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* =========================================================
+   NVR 設計規則（Design Tokens）
+   這裡定義的名字，就是整個網站「唯一可以用」的顏色、字體、尺寸。
+   要改品牌設定，只改這個檔案就好。
+   ========================================================= */
+
+@theme {
+  /* ---------- 顏色 ---------- */
+  /* 先清空 Tailwind 內建的所有顏色，只留下品牌色，避免有人用到不在規範裡的顏色 */
+  --color-*: initial;
+
+  --color-black: #000000; /* 品牌黑：側邊欄背景 */
+  --color-surface: #24272a; /* 內容區背景 */
+  --color-white: #ffffff; /* 所有文字 */
+  --color-pink: #d02e8b; /* 品牌粉紅：強調用，不要用在小字或內文 */
+  --color-yellow: #ffd100; /* 品牌黃：「注意」提示框 */
+  --color-gray: #a4a8aa; /* 品牌中性灰 */
+  --color-light-gray: #dfe2e8; /* 品牌淺灰 */
+  --color-card: #2f3237; /* 下載卡底色（介面用色，不列入品牌色） */
+
+  /* ---------- 字距 ---------- */
+  --tracking-nvr: 0.16em; /* 全站預設字距 16% */
+  --tracking-body: 0.12em; /* 內文長段落 12% */
+
+  /* ---------- 圓角 ---------- */
+  /* 銳利風格：清空內建圓角，全站都是直角 */
+  --radius-*: initial;
+
+  /* ---------- 固定尺寸（電腦、手機都一樣） ---------- */
+  --container-content: 960px; /* 內容區最大寬度 → max-w-content */
+  --container-text: 680px; /* 文字最大寬度（約一行 40 個中文字）→ max-w-text */
+  --spacing-sidebar: 240px; /* 側邊欄寬度 → w-sidebar */
+  --spacing-topbar: 56px; /* 手機版上方選單列高度 → h-topbar */
+  --spacing-gap: 16px; /* 圖片之間、標題到內文 → gap-gap、mb-gap */
+  --spacing-bar: 4px; /* 下載卡左邊條寬度 → w-bar */
 }
 
+/* 會隨螢幕大小改變的設定：
+   先在下面的 :root 寫好「手機」和「電腦」的數值，
+   這裡再把它們接到 Tailwind 的名字上。
+   這樣一個 class（例如 text-cover）就會自己在手機和電腦間切換大小。 */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* ---------- 字體 ---------- */
+  /* 先用 Orbitron（英文），沒有的字（中文）自動換成思源黑體 */
+  --font-sans: var(--font-orbitron), var(--font-noto-sans-tc), sans-serif;
+
+  /* ---------- 字級（全部白色） ---------- */
+  /* 封面標題 → text-cover */
+  --text-cover: var(--size-cover);
+  --text-cover--line-height: 1.1;
+  --text-cover--letter-spacing: 0.16em;
+
+  /* 標題 → text-heading */
+  --text-heading: var(--size-heading);
+  --text-heading--line-height: 1.3;
+  --text-heading--letter-spacing: 0.16em;
+
+  /* 內文 → text-body（長段落字距 12%） */
+  --text-body: 16px;
+  --text-body--line-height: 1.8;
+  --text-body--letter-spacing: 0.12em;
+
+  /* 小字 → text-small（選單、圖片說明、下載卡資訊、版權） */
+  --text-small: 13px;
+  --text-small--line-height: 1.6;
+  --text-small--letter-spacing: 0.16em;
+
+  /* ---------- 會變的間距與尺寸 ---------- */
+  --spacing-section: var(--size-section); /* 區塊之間 → mt-section、gap-section */
+  --spacing-gutter: var(--size-gutter); /* 內容左右留白 → px-gutter */
+  --spacing-cover: var(--size-cover-height); /* 封面高度 → h-cover */
 }
 
-@media (prefers-color-scheme: dark) {
+/* 手機版數值（預設） */
+:root {
+  --size-cover: 36px;
+  --size-heading: 22px;
+  --size-section: 48px;
+  --size-gutter: 20px;
+  --size-cover-height: 200px;
+}
+
+/* 電腦版數值：螢幕寬度 1024px 以上（跟 Tailwind 的 lg: 斷點一樣） */
+@media (min-width: 1024px) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --size-cover: 56px;
+    --size-heading: 28px;
+    --size-section: 64px;
+    --size-gutter: 48px;
+    --size-cover-height: 320px;
   }
 }
 
+/* ---------- 全站基本樣式 ---------- */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-surface);
+  color: var(--color-white);
+  font-family: var(--font-sans);
+  letter-spacing: var(--tracking-nvr);
 }
