@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Orbitron, Noto_Sans_TC } from "next/font/google";
 import "./globals.css";
+import Sidebar from "@/components/Sidebar";
+import Footer from "@/components/Footer";
 
 // 英文字體：Orbitron
 const orbitron = Orbitron({
@@ -23,10 +25,19 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
-      lang="zh-Hant"
+      lang="en"
       className={`${orbitron.variable} ${notoSansTC.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        {/* 側邊欄（電腦版在左邊，手機版變成上方選單） */}
+        <Sidebar />
+        {/* 內容區：電腦版要往右讓出側邊欄的寬度 */}
+        <div className="flex flex-1 flex-col lg:pl-sidebar">
+          {children}
+          {/* Footer（每頁最下方） */}
+          <Footer />
+        </div>
+      </body>
     </html>
   );
 }
