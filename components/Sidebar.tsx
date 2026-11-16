@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import logo from "@/assets/logo/nvr-logo_nvr-horizontal-zh-en.svg";
+import menuPattern from "@/assets/images/menu-active-pattern.svg";
 import { navItems } from "@/data/nav";
 
 // 把網址最後的「/」去掉，方便比對（例如 "/logo/" 和 "/logo" 視為同一頁）
@@ -36,13 +37,24 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                   href={item.href}
                   onClick={onNavigate}
                   aria-current={isActive ? "page" : undefined}
-                  className={`flex h-12 items-center border-l-4 pl-8 text-body font-semibold tracking-nvr transition-colors ${
+                  className={`relative flex h-12 items-center overflow-hidden border-l-4 pl-8 text-body font-semibold tracking-nvr transition-colors ${
                     isActive
-                      ? "border-pink bg-surface text-white" // 目前頁面：粉紅左邊條 + 灰底 + 白字
+                      ? // 目前頁面：粉紅左邊條 + 灰底由左往右漸漸變透明 + 白字
+                        "border-pink bg-linear-to-r from-surface to-surface/0 text-white"
                       : "border-transparent text-gray hover:bg-surface/50" // 其他頁面：灰字
                   }`}
                 >
-                  {item.label}
+                  {/* 目前頁面：右邊尾端的格紋裝飾圖案 */}
+                  {isActive && (
+                    <Image
+                      src={menuPattern}
+                      alt=""
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-y-0 right-0 h-full w-auto"
+                    />
+                  )}
+                  {/* relative：讓文字疊在圖案上面 */}
+                  <span className="relative">{item.label}</span>
                 </Link>
               </li>
             );
@@ -50,8 +62,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         </ul>
       </nav>
 
-      {/* 地球圖示（語言切換，目前只是裝飾） */}
-      <div className="mt-auto px-6 pb-8 pt-12">
+      {/* 地球圖示（語言切換，目前只是裝飾）：品牌灰調淡到 60%，比選單文字更暗 */}
+      <div className="mt-auto px-6 pb-8 pt-12 text-gray/60">
         <LanguageIcon />
       </div>
     </div>

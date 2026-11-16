@@ -83,8 +83,9 @@ NYCU Vulpes Racing（NVR，陽明交大方程式賽車隊）的品牌識別規�
 | 層級 | 電腦 | 手機 | 行高 | 粗細 | 用途 |
 |---|---|---|---|---|---|
 | 封面標題 | 56px | 36px | 1.1 | Semibold 600 | 每頁封面的項目名稱 |
-| 標題 | 28px | 22px | 1.3 | Medium 500 | 內容段落標題 |
-| 內文 | 16px | 16px | 2.6 | Regular 400 | 一般說明文字、圖片說明、下載卡檔案資訊；側邊欄文字也用這個大小（但字距維持 16%） |
+| 標題 | 30px | 22px | 1.3 | Medium 500 | 內容段落標題 |
+| 按鈕字 | 20px | 16px | 1.3 | Medium 500 | Footer 官網按鈕 |
+| 內文 | 16px | 16px | 2.2 | Regular 400 | 一般說明文字、圖片說明、下載卡檔案資訊；側邊欄文字也用這個大小（但字距維持 16%） |
 | 小字 | 10px | 10px | 1.6 | Regular 400 | 只用在 footer 版權文字 |
 
 ### 間距與尺寸（以 8 為單位）
@@ -92,8 +93,9 @@ NYCU Vulpes Racing（NVR，陽明交大方程式賽車隊）的品牌識別規�
 | 項目 | 電腦 | 手機 |
 |---|---|---|
 | 圖片之間 | 16px | 16px |
-| 標題到內文 | 28px | 28px |
-| 區塊之間 | 64px | 48px |
+| 標題到內文 | 40px | 40px |
+| 內文到圖片 | 64px | 64px |
+| 區塊之間 | 128px | 80px |
 | 內容左右留白 | 72px | 20px |
 | 內容區寬度 | 不設上限，跟著螢幕變寬（左右固定留白；文字和圖片同寬） | 滿寬 |
 | 封面高度 | 560px | 280px |
@@ -116,9 +118,9 @@ NYCU Vulpes Racing（NVR，陽明交大方程式賽車隊）的品牌識別規�
 | **Colors** | 顏色規範（主色、輔色、中性色）、HEX／RGB／CMYK、使用比例、文字搭配 |
 | **Typography** | Orbitron、思源黑體、字級層級、中英混排規則 |
 | **VR_** | VR 產生器（特殊功能頁） |
-| **Sponsors** | 贊助級距規範 |
 | **Social Media** | 貼文模板 |
 | **Application** | 周邊商品、海報、印刷注意事項（CMYK、出血、要給印刷廠什麼格式的檔案） |
+| **Graphic Patterns** | 圖形紋樣（內容待定） |
 | **Resources** | 字卡、icon（所有下載資源集中處） |
 
 ### 關於 VR_ 產生器
@@ -156,6 +158,9 @@ NYCU Vulpes Racing（NVR，陽明交大方程式賽車隊）的品牌識別規�
 - **放網站裡**（`public/`）：logo SVG／PNG、VR 標準字、icon 等小檔
 - **放車隊 Google Drive**（網站只放連結）：簡報模板、AI／PSD 原始檔、照片庫、影片等大檔
 - 字體不另外提供檔案，直接連到 Google Fonts
+- **Logo 下載包（zip）**：`public/downloads/logo/` 裡的 3 個 zip（SVG 原檔包、粉紅 PNG 包、白色 PNG 包）是用 `npm run logo-packages` 從同資料夾的 SVG 自動產生的（腳本在 `scripts/make-logo-packages.mjs`）。**SVG 有新增、刪除或修改時，要重新執行這個指令**，不然下載到的會是舊檔
+- **網頁上的 logo**：`components/LogoSvg.tsx` 直接讀 `public/downloads/logo/` 的 SVG 來顯示，所以改了 SVG，網頁和下載檔會一起更新
+- **圖片轉 WebP**：照片用有損壓縮（quality 80）；純色、透明背景的圖（logo、示意圖）用無損（lossless）且不縮放，檔案反而最小
 
 ---
 
@@ -167,16 +172,17 @@ NYCU Vulpes Racing（NVR，陽明交大方程式賽車隊）的品牌識別規�
   - [x] 3-1 把設計規則寫進 `app/globals.css`（顏色、字體、字距、字級）
   - [x] 3-2 側邊欄（含手機版上方選單）
   - [x] 3-3 封面（含滾動視差；照片放 `assets/covers/`）
-  - [x] 3-4 Footer（官網、Facebook、Instagram 網址還沒填，在 `data/footer.ts`）
-- [ ] **第 4 步：一次做一個積木**，依序：文字段落 → 下載卡 → 提示框 → 圖片網格 → 圖文並排 → Do／Don't → 色票卡。每做一個就放進 Colors 頁測試
+  - [x] 3-4 Footer（連結在 `data/footer.ts`）
+- [ ] **第 4 步：積木**（改成邊做頁面邊做積木）
+  - [x] 下載卡 `DownloadCard`、提示框 `Notice`、圖文並排 `MediaText`、logo 顯示 `LogoSvg`、NVR 圖標動畫 `NvrMarkAnimated`（做 Logo 頁時完成）
+  - [ ] 圖片網格、Do／Don't、色票卡
 - [ ] **第 5 步**：完成 Colors 頁
-- [ ] **第 6 步**：其他頁面，依序：Logo → Resources → Typography → 其他頁 → 最後才做 VR 產生器
+- [ ] **第 6 步**：其他頁面，依序：~~Logo~~ ✅ → Resources → Typography → 其他頁 → 最後才做 VR 產生器
 
-目前主頁是佔位內容；其他 8 頁顯示「Coming soon」（`components/ComingSoon.tsx`），做正式頁面時直接替換該頁的 `page.tsx`。
+主頁和 Logo 頁已有正式內容（英文）；其他 7 頁顯示「Coming soon」（`components/ComingSoon.tsx`），做正式頁面時直接替換該頁的 `page.tsx`。
 
 ## 待確認
 
-- Footer 的官網、Facebook、Instagram 網址
 - 車隊是否有 GitHub 組織，repo 何時轉移
 
 ## 已決定

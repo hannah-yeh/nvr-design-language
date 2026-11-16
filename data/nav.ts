@@ -8,8 +8,8 @@ export const navItems = [
   { label: "Colors", href: "/colors" },
   { label: "Typography", href: "/typography" },
   { label: "VR_", href: "/vr" },
-  { label: "Sponsors", href: "/sponsors" },
   { label: "Social Media", href: "/social-media" },
   { label: "Application", href: "/application" },
+  { label: "Graphic Patterns", href: "/graphic-patterns" },
   { label: "Resources", href: "/resources" },
 ];

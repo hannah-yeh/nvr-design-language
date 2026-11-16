@@ -2,7 +2,7 @@
 // 網址改這裡就好；"#" 代表還沒填
 
 export const footerLinks = {
-  officialWebsite: "#", // NVR 官網
-  facebook: "#", // Facebook 粉專
-  instagram: "#", // Instagram
+  officialWebsite: "https://vulpesracing.tw/zh-TW", // NVR 官網
+  facebook: "https://www.facebook.com/NycuVulpesRacing", // Facebook 粉專
+  instagram: "https://www.instagram.com/nycu_vulpes_racing/", // Instagram
 };
